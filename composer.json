@@ -1,0 +1,31 @@
+{
+    "name": "the94air/slimo",
+    "description": "A slender starter structure for Slim - forked from codecourse/slender",
+    "keywords": ["framework", "slim", "slender", "slimo"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=7.0.0",
+        "slim/slim": "^3.8",
+        "slim/twig-view": "^2.2",
+        "symfony/var-dumper": "^3.2",
+        "vlucas/phpdotenv": "^2.4",
+        "illuminate/database": "5.6.*",
+        "awurth/slim-validation": "^3.0",
+        "slim/csrf": "^0.8.2",
+        "slim/flash": "^0.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app"
+        },
+        "files": [
+            "app/Helpers.php"
+        ]
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    }
+}
