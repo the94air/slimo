@@ -1,8 +1,8 @@
 {
     "name": "the94air/slimo",
-    "description": "A slender starter structure for Slim - forked from codecourse/slender",
-    "keywords": ["framework", "slim", "slender", "slimo"],
-    "license": "MIT",
+    "description": "A skelton for your slim app",
+    "keywords": ["framework", "slim", "slender", "slimo", "starter"],
+    "license": "",
     "type": "project",
     "require": {
         "php": ">=7.0.0",
