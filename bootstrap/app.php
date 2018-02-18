@@ -32,6 +32,16 @@ $app = new Slim\App([
             'charset' => env('DB_CHARSET', 'utf8'),
             'collation' => env('DB_COLLATION', 'utf8_general_ci'),
             'prefix' => env('DB_PREFIX', '')
+        ],
+
+        'mail' => [
+            'driver' => env('MAIL_DRIVER', 'smtp'),
+            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+            'port' => env('MAIL_PORT', 465),
+            'username' => env('MAIL_USERNAME', null),
+            'password' => env('MAIL_PASSWORD', null),
+            'encryption' => env('MAIL_ENCRYPTION', null),
+            'sendmailPath' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail'),
         ]
     ],
 ]);
@@ -74,6 +84,24 @@ $container['view'] = function ($container) {
     $view->offsetSet('app_local', env('APP_LOCAL', 'en'));
 
     return $view;
+};
+
+$container['mailer'] = function ($container) {
+    if($container->settings['mail']['driver'] == 'smtp')
+    {
+        $transport = (new \Swift_SmtpTransport($container->settings['mail']['host'], $container->settings['mail']['port'], $container->settings['mail']['encryption']))
+                ->setUsername($container->settings['mail']['username'])
+                ->setPassword($container->settings['mail']['password']);
+    }
+
+    if($container->settings['mail']['driver'] == 'sendmail')
+    {
+        $transport = new \Swift_SendmailTransport($container->settings['mail']['sendmailPath']);
+    }
+
+    $mailer = new \Swift_Mailer($transport);
+
+    return $mailer;
 };
 
 require_once __DIR__ . '/../routes/web.php';

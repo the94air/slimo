@@ -2,3 +2,5 @@ vendor/
 node_modules/
 .git/
 .env
+composer.lock
+package-lock.json

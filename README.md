@@ -1,4 +1,3 @@
-
 <h1 align="center">slimo</h1>
 <p align="center">A skelton for your slim app</p>
 
@@ -22,8 +21,48 @@ You can browse these links to find out more about each part of this skeleton
 5. [Slim-Csrf](https://github.com/slimphp/Slim-Csrf) for CSRF protection.
 6. [SlimValidation](https://github.com/awurth/SlimValidation) & [Respect\Validation](https://github.com/Respect/Validation)  for forms validation.
 7. [Laravel Mix](https://laravel.com/docs/5.6/mix) for assets compiling with wepack.
+8. [swiftmailer](https://swiftmailer.symfony.com/docs/introduction.html) for sending emails.
+
+## How to send mail
+For that you will be able to add your configurations to the `.env` file.
+```
+# Using SMTP
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=465
+MAIL_USERNAME=example@gmail.com
+MAIL_PASSWORD=secret
+MAIL_ENCRYPTION=tls
+
+# Or using Sendmail server
+MAIL_DRIVER=sendmail
+MAIL_SENDMAIL_PATH='/usr/sbin/sendmail -bs'
+```
+And after that you will be able to access the `$mailer` from your Routers and Controllers.
+```php
+class MailController extends Controller
+{
+    public function index(Request $request, Response $response, $args)
+    {
+        $mailer = $this->mailer;
+
+        // Create a message
+        $message = (new \Swift_Message('Wonderful Subject'))
+            ->setFrom(['john@doe.com' => 'John Doe'])
+            ->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
+            ->setBody('Here is the message itself');
+
+        // Send the message
+        $result = $mailer->send($message);
+
+        // returns `int(2)` on success
+        var_dump($result);
+    }
+}
+```
 
 ## Attention
-This package is forked from [slender](https://github.com/codecourse/slender) package thanks to [Alex Garrett](https://twitter.com/alexjgarrett) with additional useful stuffs. More updates will be added soon. Feel free to add your own feature for the open source universe (Make a [pull request](https://github.com/the94air/slimo/pull/new/master)).
+This package is forked from [slender](https://github.com/codecourse/slender) package thanks to [Alex Garrett](https://twitter.com/alexjgarrett) with more additional and useful packages. Feel free to add your own feature from the open source universe (Make a [pull request](https://github.com/the94air/slimo/pull/new/master)).
 
-All used packages has it's own license. This software does not come with a license. And BTW... Laravel is a trademark of Taylor Otwell.
+This software does not have a license. All used packages has it's own license.
+And BTW... Laravel is a trademark of Taylor Otwell.
